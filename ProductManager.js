@@ -3,6 +3,7 @@ class ProductManager{
         this.products = []
         this.lastId = 0
         this.model = {
+            code: 0,
             title: "",
             description: "",
             price: 0,
@@ -13,8 +14,10 @@ class ProductManager{
     }
 
     addProduct(obj){
-        if (obj.hasOwnProperty("code")){
-            return "The product has a code. This shouldn't be the case."
+        for (const element of this.products) {
+            if (obj.code === element.code) {
+                return "Error: Código existente"
+            }
         }
 
         for (const key in this.model) {
@@ -25,9 +28,9 @@ class ProductManager{
 
         const newObj = {
             ... obj,
-            ID: this.lastId + 1,
-            code: 0
+            ID: this.lastId + 1
         }
+
         this.lastId += 1
         this.products.push(newObj)
         return newObj
@@ -38,7 +41,11 @@ class ProductManager{
     }
 
     getProductById(id){
-        return this.products.find( element => element.ID === id )
+        if (!id || !this.products.find( element => element.ID === id)){
+            return "Error: Not found"
+        } else {
+            return this.products.find( element => element.ID === id )
+        }
     }
 }
 
