@@ -21,7 +21,7 @@ class ProductManager{
         }
 
         for (const key in this.model) {
-            if (!(key in obj) && key !== "code") {
+            if (!(key in obj)) {
                 return `${key} is needed.`
             }
         }
