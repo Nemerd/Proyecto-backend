@@ -1,5 +1,7 @@
+const fs = require("fs")
+
 class ProductManager{
-    constructor(){
+    constructor(route){
         this.products = []
         this.lastId = 0
         this.model = {
@@ -11,6 +13,17 @@ class ProductManager{
             code: 0,
             stock: 0
         }
+        this.route = route
+        fs.writeFileSync(this.route, JSON.stringify(this.products), err => console.log(err))
+        this.encoding = "utf-8"
+    }
+
+    readAndUpdateProducts(){
+        this.products = JSON.parse(fs.readFileSync(this.route, this.encoding))
+    }
+
+    writeToFile(){
+        fs.writeFileSync(this.route, JSON.stringify(this.products))
     }
 
     addProduct(obj){
@@ -33,14 +46,20 @@ class ProductManager{
 
         this.lastId += 1
         this.products.push(newObj)
+
+        this.writeToFile()
         return newObj
     }
 
     getProducts(){
+        this.readAndUpdateProducts()
         return this.products
     }
 
     getProductById(id){
+
+        this.readAndUpdateProducts()
+
         if (!id || !this.products.find( element => element.ID === id)){
             return "Error: Not found"
         } else {

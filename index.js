@@ -1,6 +1,6 @@
 const ProductManager = require("./ProductManager.js")
 
-const pm = new ProductManager()
+const pm = new ProductManager("./DBs/Products")
 
 console.log(pm.getProducts());
 
