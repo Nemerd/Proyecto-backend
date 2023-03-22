@@ -1,7 +1,7 @@
 const fs = require("fs")
 
-class ProductManager{
-    constructor(route){
+class ProductManager {
+    constructor(route) {
         this.products = []
         this.lastId = 0
         this.model = {
@@ -18,15 +18,15 @@ class ProductManager{
         this.encoding = "utf-8"
     }
 
-    readAndUpdateProducts(){
+    readAndUpdateProducts() {
         this.products = JSON.parse(fs.readFileSync(this.route, this.encoding))
     }
 
-    writeToFile(){
+    writeToFile() {
         fs.writeFileSync(this.route, JSON.stringify(this.products))
     }
 
-    addProduct(obj){
+    addProduct(obj) {
         for (const element of this.products) {
             if (obj.code === element.code) {
                 return "Error: Código existente"
@@ -40,30 +40,29 @@ class ProductManager{
         }
 
         const newObj = {
-            ... obj,
+            ...obj,
             ID: this.lastId + 1
         }
 
         this.lastId += 1
         this.products.push(newObj)
-
         this.writeToFile()
+
         return newObj
     }
 
-    getProducts(){
+    getProducts() {
         this.readAndUpdateProducts()
         return this.products
     }
 
-    getProductById(id){
-
+    getProductById(id) {
         this.readAndUpdateProducts()
 
-        if (!id || !this.products.find( element => element.ID === id)){
+        if (!id || !this.products.find(element => element.ID === id)) {
             return "Error: Not found"
         } else {
-            return this.products.find( element => element.ID === id )
+            return this.products.find(element => element.ID === id)
         }
     }
 }
