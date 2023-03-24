@@ -23,6 +23,11 @@ console.log(pm.addProduct({
     stock: 3
 }))
 
+pm.updateProduct(1, { price: 500 })
+console.log(pm.getProductById(1))
+
+pm.deleteProduct(1)
+
 console.log(pm.getProductById(1))
 console.log(pm.getProductById(2))
 console.log(pm.getProductById())

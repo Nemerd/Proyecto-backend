@@ -65,6 +65,22 @@ class ProductManager {
             return this.products.find(element => element.ID === id)
         }
     }
+
+    updateProduct(id, newProperties) {
+        const originalProduct = this.getProductById(id)
+        const updatedProduct = { ...originalProduct, ...newProperties }
+
+        const replaceIndex = this.products.findIndex(obj => obj.ID === id)
+        this.products[replaceIndex] = updatedProduct
+
+        this.writeToFile()
+    }
+
+    deleteProduct(id) {
+        const deleteIndex = this.products.findIndex(obj => obj.ID === id)
+        this.products.splice(deleteIndex, 1)
+        this.writeToFile()
+    }
 }
 
 module.exports = ProductManager
