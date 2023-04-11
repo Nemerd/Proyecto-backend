@@ -27,18 +27,21 @@ class ProductManager {
     }
 
     addProduct(obj) {
+        // Chequear que no se dupliquen los códigos
         for (const element of this.products) {
             if (obj.code === element.code) {
                 return "Error: Código existente"
             }
         }
 
+        // Chequear los campos obligatorios
         for (const key in this.model) {
             if (!(key in obj)) {
                 return `${key} is needed.`
             }
         }
 
+        // Agregar el ID del objeto
         const newObj = {
             ...obj,
             ID: this.lastId + 1
@@ -57,20 +60,24 @@ class ProductManager {
     }
 
     getProductById(id) {
+
         this.readAndUpdateProducts()
 
-        if (!id || !this.products.find(element => element.ID === id)) {
+        if (!id || !this.products.find(element => element.ID === parseInt(id))) {
             return "Error: Not found"
         } else {
-            return this.products.find(element => element.ID === id)
+            return this.products.find(element => element.ID === parseInt(id))
         }
     }
 
     updateProduct(id, newProperties) {
-        const originalProduct = this.getProductById(id)
+        const originalProduct = this.getProductById(parseInt(id))
+        if (newProperties.ID) {
+            delete newProperties.ID
+        }
         const updatedProduct = { ...originalProduct, ...newProperties }
 
-        const replaceIndex = this.products.findIndex(obj => obj.ID === id)
+        const replaceIndex = this.products.findIndex(obj => obj.ID === parseInt(id))
         this.products[replaceIndex] = updatedProduct
 
         this.writeToFile()
