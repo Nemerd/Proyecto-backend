@@ -32,17 +32,31 @@ class CartManager {
         this.writeToFile()
     }
 
-    addProduct(cid, product) {
-        const workingCart = this.carts.find(element => element.ID === parseInt(cid))
-        const productIndex = workingCart.products.findIndex(element => element.ID === parseInt(product.ID))
+    addProduct(cid, productID) {
 
-        if (workingCart[productIndex]) {
-            workingCart.products[productIndex] = + product[quantity]
+        // Buscamos ID del carrito
+        const workingCart = this.carts.findIndex(element => element.ID === parseInt(cid))
+        // Buscamos ID del producto
+        const productIndex = this.carts[workingCart].products.findIndex(element => element.ID === parseInt(productID))
+
+        if (productIndex === (-1)) {
+            // Si no hay producto, se lo agrega
+            this.carts[workingCart].products.push(
+                { ID: parseInt(productID), quantity: 1 }
+            )
         } else {
-            workingCart.products.push([{ ID: product.ID, quantity: product.quantity }])
+            // De lo contrario se agrega la cantidad
+            this.carts[workingCart].products[productIndex].quantity += 1
         }
 
         this.writeToFile()
+    }
+
+    listProducts(cid) {
+        const workingCart = this.carts.find(element => element.ID === parseInt(cid))
+        if (workingCart) {
+            return workingCart.products
+        }
     }
 
 }
