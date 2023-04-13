@@ -10,7 +10,6 @@ class ProductManager {
             description: "",
             price: 0,
             thumbnail: "",
-            code: 0,
             stock: 0
         }
         this.route = route
@@ -84,7 +83,12 @@ class ProductManager {
     }
 
     deleteProduct(id) {
-        const deleteIndex = this.products.findIndex(obj => obj.ID === id)
+        console.log(id);
+        const deleteIndex = this.products.findIndex(obj => obj.ID === parseInt(id))
+        console.log(deleteIndex);
+        if (deleteIndex < 0) {
+            return "Error: Product ID not found"
+        }
         this.products.splice(deleteIndex, 1)
         this.writeToFile()
     }

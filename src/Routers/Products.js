@@ -33,13 +33,13 @@ Products.post("/", async (request, response) => {
 
 Products.put("/:pid", async (request, response) => {
     // Actualizar un producto. ¡Nunca el ID!
-    const { pid } = request.params
+    const { pid } = parseInt(request.params)
     response.send(pm.updateProduct(pid, request.body))
 });
 
 Products.delete("/:pid", async (request, response) => {
     // Eliminar un producto según su ID
-    response.send(pm.deleteProduct(parseInt(request.params.id)))
+    response.send(pm.deleteProduct(parseInt(request.params.pid)))
 });
 
 
