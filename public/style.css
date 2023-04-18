@@ -1,0 +1,54 @@
+* {
+    margin: 0%;
+    padding: 0%;
+}
+
+body {
+    display: grid;
+    grid-template-areas: "productos chat";
+    grid-template-columns: 66vw 34vw;
+}
+
+.productos {
+    grid-area: productos;
+}
+
+.chat {
+    grid-area: chat;
+    justify-self: right;
+    display: flex;
+    flex-flow: column;
+    width: max-content;
+    height: fit-content;
+    padding: 0.5em;
+    border: 0.5em solid;
+    justify-content: end;
+    max-height: 95vh;
+}
+
+.sender {
+    margin-top: 0.3em;
+    border: 0.2em solid green;
+    padding: 0.2em;
+}
+
+.messages {
+    overflow-y: scroll;
+    align-items: flex-start;
+}
+
+.message {
+    margin-top: 0.3em;
+}
+
+.ownMessage {
+    align-self: flex-end;
+    background-color: greenyellow;
+    text-align: right;
+}
+
+.outerMsg {
+    align-self: flex-start;
+    background-color: gray;
+    text-align: left;
+}

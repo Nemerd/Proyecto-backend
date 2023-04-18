@@ -26,6 +26,9 @@ class ProductManager {
     }
 
     addProduct(obj) {
+        console.log("LLega esto:");
+        console.log(obj);
+
         // Chequear que no se dupliquen los códigos
         for (const element of this.products) {
             if (obj.code === element.code) {

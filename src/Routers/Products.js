@@ -18,17 +18,25 @@ Products.get("/", async (request, response) => {
     }
 });
 
+Products.get("/hbs", (request, response) => {
+    response.render("layouts/home", { products: pm.getProducts() })
+});
+
+Products.get("/realtimeproducts", (request, response) => {
+    response.render("layouts/realTimeProducts")
+})
+
+Products.post("/", async (request, response) => {
+    // Agregar un nuevo producto
+    console.log(request.body);
+    response.send(pm.addProduct(request.body))
+});
+
 Products.get("/:pid", async (request, response) => {
     // Devolver el producto seleccionado
 
     const pid = parseInt(request.params.pid)
     response.send(pm.getProductById(pid))
-});
-
-Products.post("/", async (request, response) => {
-    // Agregar un nuevo producto
-
-    response.send(pm.addProduct(request.body))
 });
 
 Products.put("/:pid", async (request, response) => {
@@ -41,6 +49,5 @@ Products.delete("/:pid", async (request, response) => {
     // Eliminar un producto según su ID
     response.send(pm.deleteProduct(parseInt(request.params.pid)))
 });
-
 
 module.exports = Products;
