@@ -1,6 +1,6 @@
 const productsForm = document.getElementById("changer")
 
-productsForm.addEventListener('submit', async evt => {
+productsForm.addEventListener('submit', evt => {
     evt.preventDefault()
     // Formateando el item del formulario
     const newItem = {
@@ -12,12 +12,8 @@ productsForm.addEventListener('submit', async evt => {
         "thumbnail": evt.target[5].value
     }
 
-    console.log(newItem);
+    socket.emit("upload", newItem)
 
-    await fetch("http://localhost:8080/api/products", {
-        method: "POST",
-        body: JSON.stringify(newItem)
-    }).catch(err => console.log(err))
 })
 
 console.log("productChanger")

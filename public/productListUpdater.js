@@ -1,22 +1,5 @@
 const lista = document.getElementById("lista-de-productos")
 
-/* socket.on('firtst-connection', data => {
-    data.forEach(product => {
-        const newTr = lista.insertRow()
-        for (const attribute in product) {
-            const newTd = newTr.insertCell()
-            let tdElement;
-            if (attribute != "thumbnail") {
-                tdElement = document.createTextNode(product[attribute])
-            } else {
-                tdElement = document.createElement('img')
-                tdElement.src = product[attribute]
-            }
-            newTd.appendChild(tdElement)
-        }
-    });
-}) */
-
 async function reloadProducts(sitename) {
     // Eliminar los productos de la lista
     while (lista.firstChild) {
@@ -49,4 +32,4 @@ async function reloadProducts(sitename) {
 
 socket.on('product-update', (sitename) => reloadProducts(sitename))
 
-console.log("productListUpdater")
+reloadProducts("http://localhost:8080/api/products")

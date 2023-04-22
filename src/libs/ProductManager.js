@@ -26,8 +26,6 @@ class ProductManager {
     }
 
     addProduct(obj) {
-        console.log("LLega esto:");
-        console.log(obj);
 
         // Chequear que no se dupliquen los códigos
         for (const element of this.products) {
@@ -86,9 +84,7 @@ class ProductManager {
     }
 
     deleteProduct(id) {
-        console.log(id);
         const deleteIndex = this.products.findIndex(obj => obj.ID === parseInt(id))
-        console.log(deleteIndex);
         if (deleteIndex < 0) {
             return "Error: Product ID not found"
         }

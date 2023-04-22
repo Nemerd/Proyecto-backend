@@ -19,16 +19,15 @@ Products.get("/", async (request, response) => {
 });
 
 Products.get("/hbs", (request, response) => {
-    response.render("layouts/home", { products: pm.getProducts() })
+    response.render("layouts/home", { products: pm.getProducts(), title: "Productos en vivo" })
 });
 
 Products.get("/realtimeproducts", (request, response) => {
-    response.render("layouts/realTimeProducts")
+    response.render("layouts/realTimeProducts", { title: "Subida de productos" })
 })
 
 Products.post("/", async (request, response) => {
     // Agregar un nuevo producto
-    console.log(request.body);
     response.send(pm.addProduct(request.body))
 });
 

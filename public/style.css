@@ -11,6 +11,11 @@ body {
 
 .productos {
     grid-area: productos;
+    border-collapse: collapse;
+}
+
+.productos td {
+    border: 0.2em solid red;
 }
 
 .chat {
@@ -18,7 +23,6 @@ body {
     justify-self: right;
     display: flex;
     flex-flow: column;
-    width: max-content;
     height: fit-content;
     padding: 0.5em;
     border: 0.5em solid;
