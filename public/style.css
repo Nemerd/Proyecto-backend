@@ -25,9 +25,10 @@ body {
     flex-flow: column;
     height: fit-content;
     padding: 0.5em;
-    border: 0.5em solid;
+    border: 0.5em solid yellow;
     justify-content: end;
     max-height: 95vh;
+    position: relative;
 }
 
 .sender {
@@ -43,16 +44,68 @@ body {
 
 .message {
     margin-top: 0.3em;
+    margin-bottom: 40px;
+    /* display: inline-block; */
+    position: relative;
+    width: 200px;
+    height: auto;
+    background-color: lightyellow;
 }
 
 .ownMessage {
     align-self: flex-end;
     background-color: greenyellow;
     text-align: right;
+    border: 5px solid #666;
+}
+
+/* Border */
+.ownMessage:before {
+    content: ' ';
+    position: absolute;
+    left: auto;
+    right: 10px;
+    bottom: -35px;
+    border: 16px solid;
+    /* Border color makes the triangular shape */
+    border-color: #666 #666 transparent transparent;
+}
+
+.ownMessage:after {
+    content: ' ';
+    position: absolute;
+    left: auto;
+    right: 16px;
+    bottom: -20px;
+    border: 12px solid;
+    border-color: greenyellow greenyellow transparent transparent;
 }
 
 .outerMsg {
     align-self: flex-start;
-    background-color: gray;
+    background-color: rgb(85, 190, 164);
     text-align: left;
+    border: 5px solid #666
+}
+
+.outerMsg::before {
+    content: ' ';
+    position: absolute;
+    left: 10px;
+    right: auto;
+    top: auto;
+    bottom: -40px;
+    border: 20px solid;
+    border-color: #666 transparent transparent #666;
+}
+
+.outerMsg::after {
+    content: ' ';
+    position: absolute;
+    left: 16px;
+    right: auto;
+    top: auto;
+    bottom: -20px;
+    border: 12px solid;
+    border-color: rgb(85, 190, 164) transparent transparent rgb(85, 190, 164);
 }
