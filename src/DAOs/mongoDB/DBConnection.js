@@ -1,8 +1,9 @@
 const { connect, connection } = require('mongoose');
+require('dotenv').config()
 
 module.exports = {
     connectMongo: () => {
-        connect("mongodb+srv://MoisesMubarqui:Encrust-Scabbed8-Antacid@ecommerce.api9og7.mongodb.net/?retryWrites=true&w=majority")
+        connect(process.env.DB_URI)
         console.log("DB connected");
     },
     disconnect: () => {
