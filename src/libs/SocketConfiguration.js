@@ -1,6 +1,6 @@
-const ProductManager = require("./ProductManager");
+const { ProductManager } = require("./ProductManager");
 
-const pm = new ProductManager("./DBs/Products.json")
+const pm = new ProductManager()
 
 function SocketConfiguration(socketServer) {
     socketServer.on('connection', socket => {

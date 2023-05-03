@@ -1,18 +1,18 @@
 const { Router } = require("express");
 const Cart = Router();
-const CartManager = require("../libs/CartManager")
+const CartManager = require("../libs/CartManager.js")
 
-const cm = new CartManager("./DBs/Cart.json")
+const cm = new CartManager()
 
 Cart.post("/", async (request, response) => {
     // Crear carrito
-    response.send(cm.createCart())
+    response.send(await cm.createCart())
 });
 
 Cart.get("/:cid", async (request, response) => {
     // Listar los productos que pertenezcan al carrito con el parámetro cid proporcionados
     const { cid } = request.params
-    response.send(cm.listProducts(cid))
+    response.send(await cm.listProducts(cid))
 
 });
 
@@ -22,7 +22,7 @@ Cart.post("/:cid/product/:pid", async (request, response) => {
 
     const { cid, pid } = request.params
 
-    response.send(cm.addProduct(cid, pid))
+    response.send(await cm.addProduct(cid, pid))
 
 });
 

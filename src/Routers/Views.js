@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const ProductManager = require("../libs/ProductManager");
+const ProductManager = require("../DAOs/fileSystem/ProductManager");
 const Views = Router()
 
 const pm = new ProductManager("./DBs/Products.json")

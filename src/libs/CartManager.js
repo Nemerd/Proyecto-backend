@@ -1,62 +1,29 @@
-const fs = require("fs")
+const { CartDAO } = require('../DAOs/mongoDB/CartDAO');
 
 class CartManager {
-    constructor(route) {
-        this.carts = []
-        this.lastId = 0
-        this.model = {
-            products: []
-        }
-        this.route = route
-        fs.writeFileSync(this.route, JSON.stringify(this.carts), err => console.log(err))
-        this.encoding = "utf-8"
+
+    async createCart() {
+        return await CartDAO.create({})
     }
 
-    readAndUpdateProducts() {
-        this.carts = JSON.parse(fs.readFileSync(this.route, this.encoding))
-    }
-
-    writeToFile() {
-        fs.writeFileSync(this.route, JSON.stringify(this.carts))
-    }
-
-    createCart() {
-
-        const newObj = {
-            ...this.model,
-            ID: this.lastId + 1
-        }
-
-        this.lastId += 1
-        this.carts.push(newObj)
-        this.writeToFile()
-    }
-
-    addProduct(cid, productID) {
-
-        // Buscamos ID del carrito
-        const workingCart = this.carts.findIndex(element => element.ID === parseInt(cid))
-        // Buscamos ID del producto
-        const productIndex = this.carts[workingCart].products.findIndex(element => element.ID === parseInt(productID))
-
-        if (productIndex === (-1)) {
-            // Si no hay producto, se lo agrega
-            this.carts[workingCart].products.push(
-                { ID: parseInt(productID), quantity: 1 }
-            )
+    async addProduct(cid, productID) {
+        const workingCart = await CartDAO.findById(cid)
+        const productIndex = workingCart.products.findIndex(prod => prod._id === productID)
+        if (productIndex >= 0) {
+            // Si tiene el producto, agregar 1
+            console.log("Tiene el producto");
+            workingCart.products[productIndex].quantity += 1
         } else {
-            // De lo contrario se agrega la cantidad
-            this.carts[workingCart].products[productIndex].quantity += 1
+            // Si no tiene el producto, agregarlo
+            console.log("No tiene el producto");
+            workingCart.products.push({ _id: productID, quantity: 1 })
         }
-
-        this.writeToFile()
+        return await CartDAO.updateOne({ _id: cid }, { products: workingCart.products })
     }
 
-    listProducts(cid) {
-        const workingCart = this.carts.find(element => element.ID === parseInt(cid))
-        if (workingCart) {
-            return workingCart.products
-        }
+    async listProducts(cid) {
+        const workingCart = await CartDAO.findById(cid)
+        return workingCart.products
     }
 
 }

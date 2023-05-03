@@ -3,9 +3,10 @@ const Products = require("./src/Routers/Products")
 const Cart = require("./src/Routers/Cart")
 const handlebars = require("express-handlebars");
 const { Server: SocketServer } = require("socket.io");
-const ProductManager = require("./src/libs/ProductManager");
+// const ProductManager = require("../DAOs/fileSystem/ProductManager");
 const SocketConfiguration = require("./src/libs/SocketConfiguration");
 const Views = require("./src/Routers/Views");
+const DBConnection = require('./src/DAOs/mongoDB/DBConnection');
 
 // Constants
 const PORT = 8080
@@ -17,6 +18,9 @@ const socketServer = new SocketServer(httpServer)
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+// Database connection
+DBConnection.connectMongo()
 
 // Templates engine
 app.engine('hbs', handlebars.engine(
@@ -41,3 +45,6 @@ app.use("/public", express.static("./public"));
 
 // Sockets
 SocketConfiguration(socketServer)
+
+process.on("exit", () => DBConnection.disconnect())
+process.on("SIGINT", (signal) => { process.exit(0) })
