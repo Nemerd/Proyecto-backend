@@ -1,4 +1,14 @@
 const lista = document.getElementById("lista-de-productos")
+const logout = document.getElementById('logout')
+
+logout.addEventListener('click', async (evt) => {
+    console.log(await fetch(
+        'http://localhost:8080/api/cookies/deleteCookies',
+        { method: 'DELETE' }
+    ))
+    // Redirect to login
+    window.location.replace('http://localhost:8080/login')
+})
 
 async function reloadProducts(sitename) {
     // Eliminar los productos de la lista

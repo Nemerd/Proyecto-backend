@@ -5,8 +5,18 @@
 
 body {
     display: grid;
-    grid-template-areas: "productos chat";
+    grid-template-areas: "welcome chat"
+        "productos chat";
     grid-template-columns: 66vw 34vw;
+}
+
+.welcome {
+    grid-area: welcome;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: xx-large;
+    text-align: center;
 }
 
 .productos {
@@ -45,7 +55,6 @@ body {
 .message {
     margin-top: 0.3em;
     margin-bottom: 40px;
-    /* display: inline-block; */
     position: relative;
     width: 200px;
     height: auto;

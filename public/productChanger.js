@@ -15,5 +15,3 @@ productsForm.addEventListener('submit', evt => {
     socket.emit("upload", newItem)
 
 })
-
-console.log("productChanger")

@@ -1,3 +1,7 @@
+<div class="welcome">
+    <p>Welcome {{user}}</p>
+    <p>Your role is: {{role}}</p>
+</div>
 <table id="lista-de-productos" class="productos">
     {{#each products}}
     <tr>
@@ -5,5 +9,7 @@
     </tr>
     {{/each}}
 </table>
+
+<button id="logout">Logout</button>
 
 <script src="/public/productListUpdater.js"></script>

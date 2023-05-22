@@ -7,7 +7,10 @@ const { Server: SocketServer } = require("socket.io");
 const SocketConfiguration = require("./src/libs/SocketConfiguration");
 const Views = require("./src/Routers/Views");
 const DBConnection = require('./src/DAOs/mongoDB/DBConnection');
-
+const cookieParser = require('cookie-parser');
+const Login = require("./src/Routers/Login");
+const Cookies = require("./src/Routers/Cookies");
+require('dotenv').config()
 // Constants
 const PORT = 8080
 
@@ -18,6 +21,7 @@ const socketServer = new SocketServer(httpServer)
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cookieParser(process.env.COOKIE_SIGNATURE))
 
 // Database connection
 DBConnection.connectMongo()
@@ -39,6 +43,8 @@ app.set("view engine", "hbs")
 app.use("/", Views);
 app.use("/api/products", Products);
 app.use("/api/carts", Cart);
+app.use('/api/cookies', Cookies)
+app.use('/login', Login)
 
 // Folders
 app.use("/public", express.static("./public"));

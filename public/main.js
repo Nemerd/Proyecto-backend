@@ -35,5 +35,3 @@ socket.on('msgToSockets', msg => {
     messages.scrollTop = messages.scrollHeight
 
 })
-
-console.log("main");
