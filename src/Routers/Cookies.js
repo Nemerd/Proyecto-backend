@@ -1,22 +1,29 @@
 const { Router } = require('express')
+const { UserManager } = require('../libs/UserManager')
 const Cookies = Router()
 
-function authorization(request, response, next) {
-    if (request.body["user"] === 'adminCoder@coder.com' && request.body["password"] === "adminCod3r123") {
-        request.role = "administrator"
-        next()
-    } else {
-        request.role = "user"
-        next()
-    }
-}
-
-Cookies.post('/setCookie', authorization, async (request, response) => {
+Cookies.post('/setCookie', async (request, response) => {
     const { user, password } = request.body
-    response.cookie('user', user, { signed: true })
-    console.log();
-    response.cookie('role', request.role, { signed: true })
-    response.redirect("../../hbs")
+
+    const userData = await UserManager.getUser(user)
+    if (userData) {
+        response.cookie('user', user, { signed: true })
+        response.cookie('role', userData.role, { signed: true })
+        response.redirect(302, "/hbs")
+    }
+    // Admin auth hadcoded
+    else if (
+        user === 'adminCoder@coder.com'
+        &&
+        password === 'adminCod3r123') {
+        response.cookie('user', user, { signed: true })
+        response.cookie('role', 'Admin', { signed: true })
+        response.redirect(302, "/hbs")
+    }
+    // ------------------- 
+    else {
+        response.sendStatus(401)
+    }
 })
 
 Cookies.get('/checkCookie', async (request, response) => {

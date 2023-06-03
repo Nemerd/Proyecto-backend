@@ -28,7 +28,6 @@ class ProductManager {
 
     async updateProduct(id, newProperties) {
         try {
-            /* delete newProperties.id */
             return await ProductDAO.findByIdAndUpdate({ _id: id }, newProperties)
         } catch (error) {
             return { error: error }

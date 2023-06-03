@@ -1,9 +1,9 @@
+// Imports
 const express = require("express")
 const Products = require("./src/Routers/Products")
 const Cart = require("./src/Routers/Cart")
 const handlebars = require("express-handlebars");
 const { Server: SocketServer } = require("socket.io");
-// const ProductManager = require("../DAOs/fileSystem/ProductManager");
 const SocketConfiguration = require("./src/libs/SocketConfiguration");
 const Views = require("./src/Routers/Views");
 const DBConnection = require('./src/DAOs/mongoDB/DBConnection');
@@ -44,7 +44,7 @@ app.use("/", Views);
 app.use("/api/products", Products);
 app.use("/api/carts", Cart);
 app.use('/api/cookies', Cookies)
-app.use('/login', Login)
+app.use('/', Login)
 
 // Folders
 app.use("/public", express.static("./public"));

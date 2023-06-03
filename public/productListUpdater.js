@@ -7,7 +7,7 @@ logout.addEventListener('click', async (evt) => {
         { method: 'DELETE' }
     ))
     // Redirect to login
-    window.location.replace('http://localhost:8080/login')
+    window.location.replace('http://localhost:8080/')
 })
 
 async function reloadProducts(sitename) {
