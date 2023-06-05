@@ -10,6 +10,9 @@ const DBConnection = require('./src/DAOs/mongoDB/DBConnection');
 const cookieParser = require('cookie-parser');
 const Login = require("./src/Routers/Login");
 const Cookies = require("./src/Routers/Cookies");
+const passport = require("passport");
+const { initPassportLocal, initPassportGitHub } = require("./src/Configurations/passport");
+const session = require("express-session");
 require('dotenv').config()
 // Constants
 const PORT = 8080
@@ -22,6 +25,12 @@ const socketServer = new SocketServer(httpServer)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser(process.env.COOKIE_SIGNATURE))
+app.use(session({
+    secret: process.env.COOKIE_SIGNATURE,
+    resave: true,
+    saveUninitialized: true,
+}))
+initPassportLocal()
 
 // Database connection
 DBConnection.connectMongo()
@@ -38,6 +47,11 @@ app.engine('hbs', handlebars.engine(
 
 app.set("views", __dirname + "/src/views")
 app.set("view engine", "hbs")
+
+// Passport
+initPassportLocal()
+passport.use(passport.initialize())
+passport.use(passport.session())
 
 // Routers
 app.use("/", Views);
