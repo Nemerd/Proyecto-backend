@@ -1,48 +1,22 @@
 const { Router } = require('express')
-const { UserManager } = require('../libs/UserManager')
+const { UserManager } = require('../Controllers/UserManager')
 const passport = require('passport')
 const Cookies = Router()
+const { checkAdmin,
+    setCookie,
+    deleteCookies,
+    checkSignedCookie,
+    checkUnsignedCookie
+} = require('./handlers/CookieHandler')
 
-Cookies.post('/setCookie',
-    async (request, response, next) => {
-        // Admin auth hadcoded
-        const { user, password } = request.body
-        if (
-            user === 'adminCoder@coder.com'
-            &&
-            password === 'adminCod3r123') {
-            response.cookie('user', user, { signed: true })
-            response.cookie('role', 'Admin', { signed: true })
-            response.redirect(302, "/hbs")
-        } else {
-            next()
-        }
-    },
+Cookies.post('/setCookie', checkAdmin,
     passport.authenticate('sign-in'),
-    async (request, response) => {
-        if (request.user) {
-            response.cookie('user', request.user.email, { signed: true })
-            response.cookie('role', request.user.role, { signed: true })
-            response.redirect(302, "/hbs")
-        }
-        else {
-            response.sendStatus(401)
-        }
-    })
+    setCookie)
 
-Cookies.get('/checkCookie', async (request, response) => {
-    response.send(request.cookies)
-})
+Cookies.get('/checkCookie', checkUnsignedCookie)
 
-Cookies.get('/checkSignedCookie', async (request, response) => {
-    console.log(request.signedCookies['Nombre de la cookie']);
-    response.send(request.signedCookies)
-})
+Cookies.get('/checkSignedCookie', checkSignedCookie)
 
-Cookies.delete('/deleteCookies', async (request, response) => {
-    response.clearCookie('user')
-    response.clearCookie('role')
-    response.send()
-})
+Cookies.delete('/deleteCookies', deleteCookies)
 
 module.exports = Cookies

@@ -1,9 +1,12 @@
-const { CartDAO } = require('../DAOs/mongoDB/CartDAO');
+const { CartDAO } = require('../DAOs/Factory');
+const CartDTO = require('../DTO/CartDTO');
+
 
 class CartManager {
 
-    async createCart() {
-        return await CartDAO.create({})
+    // Repository implementado como Manager
+    static async createCart() {
+        return await CartDAO.create(new CartDTO({}))
     }
 
     async addProduct(cid, productID) {

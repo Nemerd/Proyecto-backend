@@ -1,9 +1,8 @@
 const { connect, connection } = require('mongoose');
-require('dotenv').config()
 
 module.exports = {
     connectMongo: () => {
-        connect(process.env.DB_URI)
+        connect(process.env.MONGO_URL)
         console.log("DB connected");
     },
     disconnect: () => {

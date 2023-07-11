@@ -1,4 +1,3 @@
-// TODO Connect DAO to database
 const { Schema, model } = require("mongoose")
 
 const collection = "carts"

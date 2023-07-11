@@ -1,20 +1,11 @@
 const { Router } = require("express");
-const { ProductManager } = require("../libs/ProductManager");
+const ViewsHandler = require("./handlers/ViewsHandler");
 const Views = Router()
 
-const pm = new ProductManager()
+const vh = new ViewsHandler()
 
-Views.get("/hbs", (request, response) => {
-    response.render("layouts/home", {
-        products: pm.getProducts(),
-        title: "Productos en vivo",
-        user: request.signedCookies['user'],
-        role: request.signedCookies['role']
-    })
-});
+Views.get("/hbs", (req, res) => vh.loggedInView(req, res));
 
-Views.get("/realtimeproducts", (request, response) => {
-    response.render("layouts/realTimeProducts", { title: "Subida de productos" })
-})
+Views.get("/updateproducts", (req, res) => vh.updateproducts(req, res))
 
 module.exports = Views

@@ -13,7 +13,11 @@ class ProductManager {
             stock: 0
         }
         this.route = route
-        fs.writeFileSync(this.route, JSON.stringify(this.products), err => console.log(err))
+        try {
+            this.readAndUpdateProducts()
+        } catch (error) {
+            fs.writeFileSync(this.route, JSON.stringify(this.products), err => console.log(err))
+        }
         this.encoding = "utf-8"
     }
 

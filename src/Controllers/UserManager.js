@@ -1,17 +1,38 @@
-const { UsersDAO } = require("../DAOs/mongoDB/UserDAO");
+const { UsersDAO } = require("../DAOs/Factory");
 const bcrypt = require('bcrypt');
+const CartManager = require("./CartManager");
+const { generateMessage } = require("../../Errors/ErrorMessages");
+const CustomError = require("../../Errors/CustomError");
+const ErrorCodes = require("../../Errors/ErrorCodes");
 const saltRounds = 10;
 
 class UserManager {
-    static async createUser({ user, password }) {
+    static async createUser({ user, password, first_name, last_name, age }) {
         try {
             const userData = {
+                first_name: first_name,
+                last_name: last_name,
+                age: age,
+                cart: await CartManager.createCart(),
+                role: 'User',
                 email: user,
                 password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
             }
             return await UsersDAO.create(userData)
         } catch (error) {
-            console.log(error);
+            CustomError.createError({
+                name: error.name,
+                cause: generateMessage({
+                    email: user,
+                    password: password,
+                    first_name: first_name,
+                    last_name: last_name,
+                    age: age
+                }),
+                message: 'Error at UserManager',
+                code: ErrorCodes.ValueNeeded
+            })
+
         }
     }
 

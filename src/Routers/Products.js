@@ -1,44 +1,17 @@
 const { Router } = require("express");
 const Products = Router();
-const { ProductManager } = require("../libs/ProductManager")
+const ProductsHandler = require("./handlers/ProductsHandler");
 
-const pm = new ProductManager()
+const ph = new ProductsHandler()
 
-Products.get("/", async (request, response) => {
-    // Listar todos los productos
-    const { limit } = request.query
-    if (!limit) {
-        response.send(await pm.getProducts())
-    } else {
-        const queryProducts = []
-        for (let i = 1; i <= limit; i++) {
-            queryProducts.push(await pm.getProductById(i))
-        }
-        response.send(queryProducts)
-    }
-});
+Products.get("/", (req, res) => ph.getAllProducts(req, res));
 
-Products.post("/", async (request, response) => {
-    // Agregar un nuevo producto
-    response.send(await pm.addProduct(request.body))
-});
+Products.post("/", (req, res) => ph.addProduct(req, res));
 
-Products.get("/:pid", async (request, response) => {
-    // Devolver el producto seleccionado
+Products.get("/:pid", (req, res) => ph.getProduct(req, res));
 
-    const pid = request.params.pid
-    response.send(await pm.getProductById(pid))
-});
+Products.put("/:pid", (req, res) => ph.updateProduct(req, res));
 
-Products.put("/:pid", async (request, response) => {
-    // Actualizar un producto. ¡Nunca el ID!
-    const { pid } = request.params
-    response.send(await pm.updateProduct(pid, request.body))
-});
-
-Products.delete("/:pid", async (request, response) => {
-    // Eliminar un producto según su ID
-    response.send(await pm.deleteProduct(request.params.pid))
-});
+Products.delete("/:pid", (req, res) => ph.deleteProduct(req, res));
 
 module.exports = Products;
