@@ -7,15 +7,20 @@ class ProductsHandler {
 
     async getAllProducts(request, response) {
         // Listar todos los productos
-        const { limit } = request.query
+        const { limit, page } = request.query
+        const { baseUrl } = request
         if (!limit) {
-            response.send(await this.pm.getProducts())
+            const qry = await this.pm.getProducts()
+            response.send({
+                status: 'Success', ...qry
+            })
         } else {
-            const queryProducts = []
-            for (let i = 1; i <= limit; i++) {
-                queryProducts.push(await this.pm.getProductById(i))
-            }
-            response.send(queryProducts)
+            const qry = await this.pm.getLimitedProducts({}, { limit: limit, page: page })
+            response.send({
+                status: 'Success', ...qry,
+                nextLink: qry.hasNextPage ? `${baseUrl}?limit=${limit}&page=${qry.nextPage}` : null,
+                prevLink: qry.hasPrevPage ? `${baseUrl}?limit=${limit}&page=${qry.prevPage}` : null
+            })
         }
     }
 
@@ -27,7 +32,7 @@ class ProductsHandler {
     async getProduct(request, response) {
         // Devolver el producto seleccionado
         const pid = request.params.pid
-        response.send(await this.pm.getProductById(pid))
+        response.send({ status: 'Success', ... await this.pm.getProductById(pid) })
     }
 
     async updateProduct(request, response) {

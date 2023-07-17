@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose")
+const paginate = require('mongoose-paginate-v2')
 
 const collection = "products"
 const productsSchema = new Schema({
@@ -28,7 +29,8 @@ const productsSchema = new Schema({
         required: true
     }
 })
-
+productsSchema.plugin(paginate)
 const ProductDAO = model(collection, productsSchema)
+
 
 module.exports = { ProductDAO }

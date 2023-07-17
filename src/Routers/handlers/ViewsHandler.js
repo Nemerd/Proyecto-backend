@@ -1,22 +1,28 @@
+const CartManager = require("../../Controllers/CartManager")
 const { ProductManager } = require("../../Controllers/ProductManager")
 
 class ViewsHandler {
     constructor() {
         this.pm = new ProductManager()
+        this.cm = new CartManager()
     }
 
-    loggedInView(request, response) {
+    async loggedInView(request, response) {
+        const data = await this.pm.getProducts()
+
         response.render("layouts/home", {
-            products: this.pm.getProducts(),
+            products: data.docs,
             title: "Productos en vivo",
             user: request.signedCookies['user'],
             role: request.signedCookies['role']
         })
     }
 
-    noSensibleInfo(request, response) {
+    async noSensibleInfo(request, response) {
+        const data = await this.pm.getProducts()
+
         response.render("layouts/home", {
-            products: this.pm.getProducts(),
+            products: data.docs,
             title: "Productos en vivo",
             user: request.signedCookies['user'],
             role: request.user.role
@@ -25,6 +31,38 @@ class ViewsHandler {
 
     updateproducts(request, response) {
         response.render("layouts/realTimeProducts", { title: "Subida de productos" })
+    }
+
+    async paginatedProducts(request, response){
+        // DONE Para visualizar todos los productos con su respectiva paginación.
+        const { page } = request.body
+        const data = await this.pm.getLimitedProducts({}, {limit: 10})
+        
+        response.render('layouts/paginatedProducts', {
+            title: "Productos",
+            products: data.docs,
+            hasPrevPage: data.hasPrevPage,
+            hasNextPage: data.hasNextPage,
+            prevLink: data.prevLink,
+            nextLink: data.nextLink
+        })
+    }
+
+    async cartProducts(request, response){
+        /* DONE Visualizar un carrito específico,
+        * donde se deberán listar SOLO los productos que pertenezcan a dicho carrito.
+        */
+        const { cid } = request.params
+        const data = await this.cm.listProducts(cid)
+
+        response.render('layouts/paginatedProducts', {
+            title: "Productos del carrito",
+            products: data,
+            hasPrevPage: data.hasPrevPage,
+            hasNextPage: data.hasNextPage,
+            prevLink: data.prevLink,
+            nextLink: data.nextLink
+        })
     }
 }
 

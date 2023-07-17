@@ -7,6 +7,6 @@ module.exports = {
     },
     disconnect: () => {
         connection.close()
-        console.log("DB connection closed");
+        console.log("\nDB connection closed");
     }
 }

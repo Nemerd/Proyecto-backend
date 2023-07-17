@@ -14,8 +14,9 @@ class ProductManager {
 
     async getProducts() {
         try {
-            return await ProductDAO.find({})
+            return await ProductDAO.paginate({})
         } catch (error) {
+            console.log(error);
             return error
         }
     }
@@ -34,6 +35,10 @@ class ProductManager {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    async getLimitedProducts(query, { limit = 10, page = 1 }) {
+        return await ProductDAO.paginate(query, { limit: parseInt(limit), page: parseInt(page) })
     }
 
     async updateProduct(id, newProperties) {

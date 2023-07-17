@@ -46,7 +46,9 @@ app.engine('hbs', handlebars.engine(
         extname: ".hbs",
         layoutsDir: __dirname + "/src/views/layouts",
         partialsDir: __dirname + "/src/views/partials/",
-        defaultLayout: "index.hbs"
+        defaultLayout: "index.hbs",
+        runtimeOptions:{allowProtoPropertiesByDefault:true,
+            allowedProtoMethodsByDefault:true}
     }
 ))
 

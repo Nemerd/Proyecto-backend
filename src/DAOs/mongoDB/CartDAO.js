@@ -2,10 +2,13 @@ const { Schema, model } = require("mongoose")
 
 const collection = "carts"
 const cartSchema = new Schema({
-    products: {
-        type: Array,
-        required: false
-    }
+    products: [{
+        product: {
+            type: Schema.Types.ObjectId,
+            ref: 'products'
+        },
+        quantity: Number
+    }]
 })
 
 const CartDAO = model(collection, cartSchema)

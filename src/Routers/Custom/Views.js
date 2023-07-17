@@ -12,6 +12,10 @@ class Views extends CustomRouter {
         this.get("/updateproducts", (req, res) => this.vh.updateproducts(req, res))
 
         this.get('/current', (req, res) => req.user = UserDTO.noSensible())
+
+        this.get('/products', (req, res) => this.vh.paginatedProducts(req, res))
+
+        this.get('/carts/:cid', (req, res) => this.vh.cartProducts(req, res))
     }
 
     customResponses(req, res, next) {

@@ -8,11 +8,20 @@ class Cart extends CustomRouter {
         this.ch = new CartHandler()
     }
     init() {
-        this.post("/", async (req, res) => ch.createCart(req, res));
+        this.post("/", async (req, res) => this.ch.createCart(req, res));
+        
+        this.get("/:cid", async (req, res) => this.ch.listCartProducts(req, res));
 
-        this.get("/:cid", async (req, res) => ch.listCartProducts(req, res));
+        this.post("/:cid/product/:pid", async (req, res) => this.ch.addProductToCart(req, res));
+        
+        this.put('/:cid', async (req, res) => this.ch.updateCart(req, res))
+        
+        this.put('/:cid/products/:pid', async (req, res) => this.ch.updateSpecificProduct(req, res))
 
-        this.post("/:cid/product/:pid", async (req, res) => ch.addProductToCart(req, res));
+        this.delete('/:cid', async (req, res) => this.ch.resetCart(req, res))
+        
+        this.delete('/:cid/products/:pid', async (req, res) => this.ch.deleteProduct(req, res))
+
     }
 
     customResponses(req, res, next) {

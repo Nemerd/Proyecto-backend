@@ -20,7 +20,7 @@ async function reloadProducts(sitename) {
         .then(x => x.json())
 
     // Crear una fila por cada producto
-    response.forEach(product => {
+    response.docs.forEach(product => {
 
         const newTr = lista.insertRow()
         for (const attribute in product) {
