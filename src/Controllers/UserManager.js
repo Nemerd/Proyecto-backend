@@ -7,17 +7,19 @@ const ErrorCodes = require("../../Errors/ErrorCodes");
 const saltRounds = 10;
 
 class UserManager {
-    static async createUser({ user, password, first_name, last_name, age }) {
+    static async createUser({ user, password, first_name, last_name }) {
         try {
+            const pass = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+            const cart = await CartManager.createCart()
             const userData = {
                 first_name: first_name,
                 last_name: last_name,
-                age: age,
-                cart: await CartManager.createCart(),
+                cart: cart,
                 role: 'User',
                 email: user,
-                password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+                password: pass
             }
+            console.log(userData);
             return await UsersDAO.create(userData)
         } catch (error) {
             CustomError.createError({
@@ -26,8 +28,7 @@ class UserManager {
                     email: user,
                     password: password,
                     first_name: first_name,
-                    last_name: last_name,
-                    age: age
+                    last_name: last_name
                 }),
                 message: 'Error at UserManager',
                 code: ErrorCodes.ValueNeeded

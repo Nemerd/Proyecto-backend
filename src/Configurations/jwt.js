@@ -5,9 +5,12 @@ function createToken(user) {
     return token
 }
 
-function getAndVerifyTokenFromHeader(header) {
-    const token = header.split(' ')[1]
-    return jwt.verify(token, process.env.JWT_PRIVATE_KEY)
+function getAndVerifyToken(token) {
+    try {
+        return jwt.verify(token, process.env.JWT_PRIVATE_KEY)
+    } catch (error) {
+        return 'El log no fue hecho con JWT'
+    }
 }
 
-module.exports = { createToken, getAndVerifyTokenFromHeader }
+module.exports = { createToken, getAndVerifyToken }

@@ -5,11 +5,11 @@ const CartDTO = require('../DTO/CartDTO');
 class CartManager {
 
     // Repository implementado como Manager
-    async createCart() {
-        return await CartDAO.create(new CartDTO({}))
+    static async createCart() {
+        return await CartDAO.create({})
     }
 
-    async showCart(cid){
+    async showCart(cid) {
         return await CartDAO.findById(cid)
     }
 
@@ -31,15 +31,15 @@ class CartManager {
         return workingCart.products
     }
 
-    async removeProduct(cid, droductID){
+    async removeProduct(cid, droductID) {
         const workingCart = await CartDAO.findById(cid)
         const productIndex = workingCart.products.findIndex(prod => prod.product == productID)
         workingCart.splice(productIndex, 1)
         return CartDAO.updateOne({ _id: cid }, { products: workingCart.products })
     }
 
-    async resetCart(cid){
-        return CartDAO.updateOne({_id:cid}, {products: []})
+    async resetCart(cid) {
+        return CartDAO.updateOne({ _id: cid }, { products: [] })
     }
 }
 

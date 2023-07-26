@@ -11,9 +11,12 @@ class LoginHandler {
     }
 
     async createUser(request, response) {
-        const { user, password } = request.body
+        const { user, first_name, last_name, password } = request.body
+
         await UserManager.createUser({
             user: user,
+            first_name: first_name,
+            last_name: last_name,
             password: password
         })
         response.render('layouts/home')

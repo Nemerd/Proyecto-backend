@@ -10,13 +10,15 @@ class Cookies extends CustomRouter {
         this.ch = require('../handlers/CookieHandler')
     }
     init() {
-        this.post('/setCookie', this.ch.checkAdmin,
-            passport.authenticate('sign-in'),
-            this.ch.setCookie)
+        this.post('/JWTLogin', this.ch.JWTLogin)
 
         this.get('/checkCookie', this.ch.checkUnsignedCookie)
 
         this.get('/checkSignedCookie', this.ch.checkSignedCookie)
+
+        this.post('/current', this.ch.checkAdmin,
+            passport.authenticate('sign-in'),
+            this.ch.setCookie)
 
         this.delete('/deleteCookies', this.ch.deleteCookies)
     }
