@@ -1,4 +1,4 @@
-const { UserManager } = require("../Controllers/UserManager")
+const UserManager = require("../Controllers/UserManager")
 
 class UserDTO {
     constructor(params) {

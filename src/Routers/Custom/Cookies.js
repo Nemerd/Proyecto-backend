@@ -16,18 +16,12 @@ class Cookies extends CustomRouter {
 
         this.get('/checkSignedCookie', this.ch.checkSignedCookie)
 
-        this.post('/current', this.ch.checkAdmin,
+        this.post('/current',
+            this.ch.checkAdmin,
             passport.authenticate('sign-in'),
             this.ch.setCookie)
 
         this.delete('/deleteCookies', this.ch.deleteCookies)
-    }
-
-    customResponses(req, res, next) {
-        res.sendSuccess = payload => res.send({ status: 'Success', payload })
-        res.sendServerError = error => res.send({ status: 'Server Error', error })
-        res.sendUserError = error => res.send({ status: 'User Error', error })
-        next()
     }
 }
 

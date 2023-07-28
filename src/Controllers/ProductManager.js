@@ -58,4 +58,4 @@ class ProductManager {
     }
 }
 
-module.exports = { ProductManager }
+module.exports = ProductManager

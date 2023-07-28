@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { UserManager } = require('../Controllers/UserManager')
+const UserManager = require('../Controllers/UserManager')
 const passport = require('passport')
 const Cookies = Router()
 const { checkAdmin,

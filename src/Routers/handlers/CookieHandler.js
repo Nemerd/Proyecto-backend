@@ -2,7 +2,7 @@ const {
 	createToken,
 	getAndVerifyToken,
 } = require("../../Configurations/jwt");
-const { UserManager } = require("../../Controllers/UserManager");
+const UserManager = require("../../Controllers/UserManager");
 
 class CookieHandler {
 	async JWTLogin(request, response) {
@@ -27,6 +27,8 @@ class CookieHandler {
 	async checkAdmin(request, response, next) {
 		// Admin auth hadcoded
 		const { user, password } = request.body;
+		console.log(process.env.ADMIN_EMAIL);
+		console.log(process.env.ADMIN_PASSWORD);
 		if (
 			user === process.env.ADMIN_EMAIL &&
 			password === process.env.ADMIN_PASSWORD

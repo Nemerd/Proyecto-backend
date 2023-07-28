@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local')
 const GithubStrategy = require('passport-github2');
-const { UserManager } = require('../Controllers/UserManager');
+const UserManager = require('../Controllers/UserManager');
 const bcrypt = require('bcrypt');
 
 function initPassportLocal() {

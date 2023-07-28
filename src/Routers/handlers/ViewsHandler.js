@@ -1,5 +1,5 @@
 const CartManager = require("../../Controllers/CartManager")
-const { ProductManager } = require("../../Controllers/ProductManager")
+const ProductManager = require("../../Controllers/ProductManager")
 
 class ViewsHandler {
     constructor() {
@@ -33,11 +33,10 @@ class ViewsHandler {
         response.render("layouts/realTimeProducts", { title: "Subida de productos" })
     }
 
-    async paginatedProducts(request, response){
-        // DONE Para visualizar todos los productos con su respectiva paginación.
+    async paginatedProducts(request, response) {
         const { page } = request.body
-        const data = await this.pm.getLimitedProducts({}, {limit: 10})
-        
+        const data = await this.pm.getLimitedProducts({}, { limit: 10 })
+
         response.render('layouts/paginatedProducts', {
             title: "Productos",
             products: data.docs,
@@ -48,10 +47,7 @@ class ViewsHandler {
         })
     }
 
-    async cartProducts(request, response){
-        /* DONE Visualizar un carrito específico,
-        * donde se deberán listar SOLO los productos que pertenezcan a dicho carrito.
-        */
+    async cartProducts(request, response) {
         const { cid } = request.params
         const data = await this.cm.listProducts(cid)
 

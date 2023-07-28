@@ -1,4 +1,4 @@
-const { ProductManager } = require("./ProductManager");
+const ProductManager = require("./ProductManager");
 
 const pm = new ProductManager()
 
