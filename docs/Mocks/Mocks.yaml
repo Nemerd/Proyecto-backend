@@ -1,0 +1,9 @@
+paths:
+  /api/mockingproducts:
+    get:
+      summary: Genera 100 usuarios falsos para testear.
+      tags:
+        - Mocks
+      responses:
+        "200":
+          description: OK

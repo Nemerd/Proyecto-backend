@@ -35,7 +35,7 @@ class ViewsHandler {
 
     async paginatedProducts(request, response) {
         const { page } = request.body
-        const data = await this.pm.getLimitedProducts({}, { limit: 10 })
+        const data = await this.pm.getLimitedProducts({}, { limit: 10, page: page })
 
         response.render('layouts/paginatedProducts', {
             title: "Productos",

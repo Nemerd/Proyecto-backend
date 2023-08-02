@@ -1,0 +1,64 @@
+paths:
+  /hbs:
+    get:
+      summary: Vista de los productos en tiempo real una vez logueado.
+      tags:
+        - Views
+      responses:
+        "200":
+          description: OK
+
+  /updateproducts:
+    get:
+      summary: Vista para actualizar un producto específico.
+      tags:
+        - Views
+      responses:
+        "200":
+          description: OK
+
+  /current:
+    get:
+      summary: Trae los datos no sensibles del usuario.
+      tags:
+        - Views
+      responses:
+        "200":
+          description: OK
+
+  /products:
+    get:
+      summary: Lista de productos paginados.
+      parameters:
+        - in: body
+          name: page
+          description: Página de productos
+          schema:
+            type: number
+            example: {"page": 1}
+      tags:
+        - Views
+      responses:
+        "200":
+          description: OK
+
+  /carts/{cid}:
+    get:
+      summary: Vista de los productos del carrito.
+      parameters:
+        - $ref: '#components/parameters/cartID'
+      tags:
+        - Views
+      responses:
+        "200":
+          description: OK
+
+components:
+  parameters:
+    cartID:
+      name: cid
+      in: path
+      required: true
+      description: ID del carrito seleccionado.
+      schema:
+        $type: String

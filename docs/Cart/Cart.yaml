@@ -1,0 +1,91 @@
+paths:
+  /api/carts:
+    post:
+      summary: Crea un carrito nuevo.
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: ID del carrito creado.
+  
+  /api/{cid}:
+    get:
+      summary: Lista los productos del carrito.
+      parameters:
+        - $ref: '#components/parameters/cartID'
+      tags:
+        - Carts
+    put:
+      summary: Actualiza todas las cantidades de los productos del carrito.
+      parameters:
+        - $ref: '#components/parameters/cartID'
+        - $ref: '#components/parameters/updateManyProducts'
+      tags:
+        - Carts
+    delete:
+      summary: Vacía el carrito.
+      parameters:
+        - $ref: '#components/parameters/cartID'
+      tags:
+        - Carts
+
+  /api/{cid}/product/{pid}:
+    post:
+      summary: Agrega el producto al carrito.
+      parameters:
+        - $ref: '#components/parameters/productID'
+        - $ref: '#components/parameters/cartID'
+      tags:
+        - Carts
+
+  /api/{cid}/products/{pid}:
+    put:
+      summary: Actualiza en el carrito solo este producto.
+      parameters:
+        - $ref: '#components/parameters/productID'
+        - $ref: '#components/parameters/cartID'
+        - in: body
+          name: amount
+          description: Cantidad a agregar al carrito. Si el número es negativo, se quitará.
+          required: true
+          schema:
+            $type: object
+            example: {"ammount": 1}
+      tags:
+        - Carts
+    delete:
+      summary: Elimina el producto del carrito.
+      parameters:
+        - $ref: '#components/parameters/cartID'
+      tags:
+        - Carts
+
+  /api/{cid}/purchase:
+    get:
+      summary: Finalizar la compra de este carrito.
+      parameters:
+        - $ref: '#components/parameters/cartID'
+      tags:
+        - Carts
+
+components:
+  parameters:
+    productID:
+      name: pid
+      in: path
+      required: true
+      description: ID del producto solicitado.
+      schema:
+        $type: String
+    cartID:
+      name: cid
+      in: path
+      required: true
+      description: ID del carrito seleccionado.
+      schema:
+        $type: String
+    updateManyProducts:
+      in: body
+      required: true
+      schema:
+        type: Array

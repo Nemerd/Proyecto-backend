@@ -1,0 +1,63 @@
+paths:
+  /:
+    get:
+      summary: Vista para loguearse
+      tags:
+        - Login
+      responses:
+        "200":
+          description: OK
+
+  /register:
+    get:
+      summary: Vista para registrarse.
+      tags:
+        - Login
+      responses:
+        "200":
+          description: OK
+
+  /createUser:
+    get:
+      summary: Crea un usuario.
+      parameters:
+        - in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              user:
+                type: String
+                example: User@mail.com
+              first_name:
+                type: String
+                example: Fulano
+              last_name:
+                type: String
+                example: De Tal
+              password:
+                type: String
+                example: Fulanito.123
+      tags:
+        - Login
+      responses:
+        "200":
+          description: OK
+
+  /github:
+    get:
+      summary: Inicia la estrategia de autenticación por GitHub.
+      tags:
+        - Login
+      responses:
+        "200":
+          description: OK
+
+  /githubcallback:
+    get:
+      summary: Maneja el callback de GitHub.
+      tags:
+        - Login
+      responses:
+        "200":
+          description: OK

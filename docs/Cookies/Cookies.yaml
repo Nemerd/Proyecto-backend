@@ -1,0 +1,55 @@
+paths:
+  /api/cookies/JWTLogin:
+    post:
+      summary: Inicia la estrategia de logueo por JWT.
+      parameters:
+        - in: body
+          schema:
+            type: object
+            required: true
+            properties:
+             user:
+              type: String
+             password:
+              type: String
+      tags:
+        - Cookies
+      responses:
+        "200":
+          description: OK
+
+  /api/cookies/checkCookie:
+    get:
+      summary: Chequea las cookies no firmadas.
+      tags:
+        - Cookies
+      responses:
+        "200":
+          description: OK
+
+  /api/cookies/checkSignedCookie:
+    get:
+      summary: Chequea las cookies firmadas.
+      tags:
+        - Cookies
+      responses:
+        "200":
+          description: OK
+
+  /api/cookies/current:
+    post:
+      summary: Setea las cookies.
+      tags:
+        - Cookies
+      responses:
+        "200":
+          description: OK
+
+  /api/cookies/deleteCookies:
+    delete:
+      summary: Envía un pedido para eliminar todas las cookies.
+      tags:
+        - Cookies
+      responses:
+        "200":
+          description: OK

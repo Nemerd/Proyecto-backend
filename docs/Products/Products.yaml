@@ -1,0 +1,182 @@
+paths:
+  /api/products:
+    get:
+      summary: Trae todos los productos paginados.
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Todos los productos paginados.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/PaginatedProducts'
+    post: 
+      summary: Agrega el producto que llega por el body.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: '#components/schemas/Product'
+      tags:
+        - Products
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/PaginatedProducts'
+
+  /api/products/{pid}:
+    get:
+      summary: Trae solo el producto pedido.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/productID'
+      responses:
+        "200":
+          description: El producto pedido.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+    put:
+      summary: Actualiza el producto.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/productID'
+        - $ref: '#/components/parameters/productBody'
+      responses:
+        "200":
+          description: El producto fue actualizado.
+    delete:
+      summary: Elimina el producto.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/productID'
+      responses:
+        "200":
+          description: El producto fue eliminado exitosamente.
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: String
+          example: ObjectId('dnsdjfnon4tp9uq3gnfu4nf4')
+        code:
+          type: Number
+          example: 126463152
+        title:
+          type: String
+          example: Producto ejemplo
+        description:
+          type: String
+          example: Un producto para ejemplo
+        price:
+          type: Number
+          example: 999.999
+        thumbnail:
+          type: String
+          example: https://ruta.al/archivo/de/la/imagen
+        stock:
+          type: Number
+          example: 99
+      required:
+        - code
+        - title
+        - description
+        - price
+        - thumbnail
+        - stock
+    PaginatedProducts:
+      type: object
+      properties:
+        status:
+          type: Number
+          example: Success
+        docs:
+          type: Array
+          description: Areglo con los productos.
+          example: [
+            {
+              "_id": "6451ed796d7be0f80474ce55",
+              "code": 3,
+              "title": "Título modificado",
+              "description": "",
+              "price": 200,
+              "thumbnail": "",
+              "stock": 10,
+              "__v": 0
+            },
+            {
+              "_id": "6451ed7c6d7be0f80474ce57",
+              "code": 1,
+              "title": "Nombre del producto",
+              "description": "Description",
+              "price": 0,
+              "thumbnail": "thumb",
+              "stock": 0,
+              "__v": 0
+            }]
+        totalDocs:
+          type: Number
+          description: Productos en total.
+          example: 2
+        offset:
+          type: Number
+          description: Saltar esta cantidad de productos.
+          example: 0
+        limit:
+          type: Number
+          description: Cantidad de productos por página.
+          example: 10
+        totalPages:
+          type: Number
+          description: Páginas totales.
+          example: 1
+        page:
+          type: Number
+          description: Número de páginas en total.
+          example: 1
+        pagingCounter:
+          type: Number
+          example: 1
+        hasPrevPage:
+          type: Boolean
+          description: ¿Tiene página anterior?
+          example: false
+        hasNextPage:
+          type: Boolean
+          description: ¿Tiene página siguiente?
+          example: false
+        prevPage:
+          type: String or null
+          description: Link a la página previa.
+          example: null
+        nextPage:
+          type: String or null
+          description: Link a la página siguiente.
+          example: null
+  parameters:
+    productID:
+      name: pid
+      in: path
+      required: true
+      description: ID del producto solicitado.
+      schema:
+        $type: String
+    productBody:
+      name: pbody
+      in: body
+      required: true
+      description: Modificaciones al producto.
+      schema:
+        $ref: '#components/schemas/Product'

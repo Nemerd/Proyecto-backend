@@ -16,6 +16,8 @@ const { initPassportLocal, initPassportGitHub } = require("./src/Configurations/
 const session = require("express-session");
 const { commander } = require("./src/Configurations/config");
 const { mode } = commander.opts()
+const swaggerJSDoc = require('swagger-jsdoc')
+const swaggerUIExpress = require('swagger-ui-express')
 require('dotenv').config({ path: "./.env." + mode })
 
 
@@ -26,6 +28,21 @@ const PORT = process.env.PORT
 const app = express()
 const httpServer = app.listen(PORT)
 const socketServer = new SocketServer(httpServer)
+
+// Swagger setup
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Documentación de Backend-tienda',
+            description: 'Proyecto para CoderHouse por Moisés Mubarqui'
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+app.use('/docs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -47,8 +64,10 @@ app.engine('hbs', handlebars.engine(
         layoutsDir: __dirname + "/src/views/layouts",
         partialsDir: __dirname + "/src/views/partials/",
         defaultLayout: "index.hbs",
-        runtimeOptions:{allowProtoPropertiesByDefault:true,
-            allowedProtoMethodsByDefault:true}
+        runtimeOptions: {
+            allowProtoPropertiesByDefault: true,
+            allowedProtoMethodsByDefault: true
+        }
     }
 ))
 
