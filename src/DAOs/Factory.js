@@ -24,6 +24,9 @@ switch (persistence) {
         break;
 
     default:
+        ({ ProductDAO } = require('./mongoDB/ProductDAO')) &&
+            ({ CartDAO } = require('./mongoDB/CartDAO')) &&
+            ({ UsersDAO } = require('./mongoDB/UsersDAO'))
         break;
 }
 

@@ -9,10 +9,10 @@ const permission = (level) => (request, response, next) => {
     }
 }
 
-const cartPermission = (request, response, next) => {
+const cartPermission = async (request, response, next) => {
     const { cid } = request.params
-    const { username } = request.signedCookies['user']
-    const user = UserManager.getUser(username)
+    const username = request.signedCookies['user']
+    const user = await UserManager.getUser(username)
 
     if (user.cart == cid) {
         next()

@@ -15,6 +15,8 @@ class Login extends CustomRouter {
 
         this.get('/register', this.lh.register)
 
+        this.get('/recovery', this.lh.recovery)
+
         this.post('/createUser', this.lh.createUser)
 
         this.get('/github', this.passport.authenticate('github', { scope: ['user:email'] }))
@@ -22,6 +24,8 @@ class Login extends CustomRouter {
         this.get('/githubcallback',
             this.passport.authenticate('github', { failureRedirect: '/' }),
             this.lh.githubcallback)
+
+        this.get('/recoveruser', this.lh.recoveruser)
     }
 }
 

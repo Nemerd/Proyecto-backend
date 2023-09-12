@@ -9,7 +9,7 @@ class TicketManager {
             const month = now.getMonth()
             const year = now.getFullYear()
 
-            const randomAspect = parseInt(Math.random() * 100)
+            const randomAspect = parseInt(Math.random() * 10000)
 
             return `${day}-${month}-${year}.${randomAspect}`
         }

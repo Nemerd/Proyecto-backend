@@ -6,6 +6,7 @@ class ProductsHandler {
     }
 
     async getAllProducts(request, response) {
+
         const { limit, page } = request.query
         const { baseUrl } = request
         if (!limit) {

@@ -6,7 +6,8 @@
 body {
     display: grid;
     grid-template-areas: "welcome chat"
-        "productos chat";
+        "productos chat"
+        "botones chat";
     grid-template-columns: 66vw 34vw;
 }
 
@@ -17,6 +18,10 @@ body {
     justify-content: center;
     font-size: xx-large;
     text-align: center;
+}
+
+.botones {
+    grid-area: botones;
 }
 
 .productos {

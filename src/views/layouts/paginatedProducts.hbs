@@ -1,18 +1,22 @@
+{{!-- // TODO Botón de finalizar compra--}}
+
 <table id="lista-de-productos" class="productos">
     {{#each products}}
-        <tr>
-            <td>{{product.code}}</td>
-            <td>{{product.title}}</td>
-            <td>{{product.description}}</td>
-            <td>{{product.price}}</td>
-            <td><img src={{product.thumbnail}}></td>
-            <td>Quantity: {{quantity}}</td>
-        </tr>
+    <tr>
+        <td>{{product.code}}</td>
+        <td>{{product.title}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.price}}</td>
+        <td><img src={{product.thumbnail}}></td>
+        <td>Quantity: {{quantity}}</td>
+    </tr>
     {{/each}}
 </table>
 {{#if hasPrevPage}}
-    <a href={{prevLink}}>Previous page</a>
+<a href={{prevLink}}>Previous page</a>
 {{/if}}
 {{#if hasNextPage}}
-    <a href={{nextLink}}>Next page</a>
+<a href={{nextLink}}>Next page</a>
 {{/if}}
+
+<a href="/api/carts/{{cid}}/purchase" class="botones">Finalizar compra</a>

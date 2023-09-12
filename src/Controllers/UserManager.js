@@ -4,7 +4,17 @@ const CartManager = require("./CartManager");
 const { generateMessage } = require("../../Errors/ErrorMessages");
 const CustomError = require("../../Errors/CustomError");
 const ErrorCodes = require("../../Errors/ErrorCodes");
+const { log } = require("winston");
 const saltRounds = 10;
+
+function createRandomString() {
+    let randomString = Math.random().toString(36).substring(2, 10)
+
+    return randomString.substring(0, 2)
+        + '-' + randomString.substring(2, 4)
+        + '-' + randomString.substring(4, 6)
+        + '-' + randomString.substring(6)
+}
 
 class UserManager {
     static async createUser({ user, password, first_name, last_name }) {
@@ -14,14 +24,14 @@ class UserManager {
             const userData = {
                 first_name: first_name,
                 last_name: last_name,
-                cart: cart,
+                cart: cart.id,
                 role: 'User',
                 email: user,
                 password: pass
             }
-            console.log(userData);
             return await UsersDAO.create(userData)
         } catch (error) {
+            console.log(error)
             CustomError.createError({
                 name: error.name,
                 cause: generateMessage({
@@ -74,6 +84,17 @@ class UserManager {
             return false
         }
 
+    }
+
+    static async updatePass(usr, newPass) {
+        try {
+            return await UsersDAO.updateOne({ email: usr }, {
+                password: bcrypt.hashSync(newPass, bcrypt.genSaltSync(10)),
+                security_code: createRandomString()
+            })
+        } catch (error) {
+            log(error)
+        }
     }
 }
 

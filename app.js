@@ -17,7 +17,8 @@ const session = require("express-session");
 const { commander } = require("./src/Configurations/config");
 const { mode } = commander.opts()
 const swaggerJSDoc = require('swagger-jsdoc')
-const swaggerUIExpress = require('swagger-ui-express')
+const swaggerUIExpress = require('swagger-ui-express');
+const Mailing = require("./src/Routers/Custom/Mailing");
 require('dotenv').config({ path: "./.env." + mode })
 
 
@@ -92,6 +93,9 @@ const login = new Login()
 app.use('/', login.getRouter())
 const mock = new Mock()
 app.use('/api', mock.getRouter())
+const mail = new Mailing()
+app.use('/api', mail.getRouter())
+
 
 // Folders
 app.use("/public", express.static("./public"));

@@ -14,7 +14,8 @@ class ViewsHandler {
             products: data.docs,
             title: "Productos en vivo",
             user: request.signedCookies['user'],
-            role: request.signedCookies['role']
+            role: request.signedCookies['role'],
+            cid: request.cookies['cart']
         })
     }
 
@@ -57,7 +58,8 @@ class ViewsHandler {
             hasPrevPage: data.hasPrevPage,
             hasNextPage: data.hasNextPage,
             prevLink: data.prevLink,
-            nextLink: data.nextLink
+            nextLink: data.nextLink,
+            cid: cid
         })
     }
 }

@@ -10,7 +10,7 @@ class CartManager {
     }
 
     async showCart(cid) {
-        return await CartDAO.findById(cid).populate('products.product')
+        return await CartDAO.findById({ _id: cid }).populate('products.product')
     }
 
     async addProduct(cid, productID, byamount = 1) {

@@ -1,9 +1,9 @@
 <h1>Login</h1>
-<form action="/api/cookies/current" method="post">
+<form action="/api/cookies/current" method="post" autocomplete="on">
     <label for="user">User:</label>
-    <input type="text" name="user" id="user">
+    <input type="text" name="user" id="user" autocomplete="email">
     <label for="password">Password:</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" autocomplete="current-password">
 
     <button type="submit">Send</button>
 </form>
@@ -19,3 +19,5 @@
 <a href="/register">Register</a>
 <br>
 <a href="/github">Entrar con GitHub</a>
+<br>
+<a href="/recovery">Recuperar contraseña</a>

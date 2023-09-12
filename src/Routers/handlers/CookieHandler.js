@@ -21,8 +21,17 @@ class CookieHandler {
 		}
 	}
 
+	async recoverpass(request, response) {
+		const { security_code, newPass } = request.body
+		const usr = await UserManager.getSpecificUser({ security_code: security_code })
 
-
+		if (usr.email) {
+			await UserManager.updatePass(usr.email, newPass)
+			response.redirect('/')
+		} else {
+			response.sendStatus(404)
+		}
+	}
 
 	async checkAdmin(request, response, next) {
 		// Admin auth hadcoded
@@ -43,6 +52,7 @@ class CookieHandler {
 
 	async setCookie(request, response) {
 		if (request.user) {
+			response.cookie("cart", request.user.cart)
 			response.cookie("user", request.user.email, { signed: true });
 			response.cookie("role", request.user.role, { signed: true });
 			response.redirect(302, "/hbs");

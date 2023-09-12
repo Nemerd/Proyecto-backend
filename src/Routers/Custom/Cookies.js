@@ -22,6 +22,8 @@ class Cookies extends CustomRouter {
             this.ch.setCookie)
 
         this.delete('/deleteCookies', this.ch.deleteCookies)
+
+        this.post('/recoverpass', this.ch.recoverpass)
     }
 }
 

@@ -29,6 +29,14 @@ class LoginHandler {
     async register(request, response) {
         response.render('layouts/register')
     }
+
+    async recovery(request, response) {
+        response.render('layouts/recovery')
+    }
+
+    async recoveruser(request, response) {
+        response.render('layouts/recoveruser')
+    }
 }
 
 module.exports = new LoginHandler

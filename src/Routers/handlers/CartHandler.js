@@ -59,8 +59,10 @@ class CartHandler {
         const unableToBuy = []
 
         const workingCart = await this.cm.showCart(cid)
+
         // Check stock and add it to sale
         for (const product of workingCart.products) {
+            console.log(product);
             if (product.product.stock < product.quantity) {
                 unableToBuy.push(product)
             } else if (product.product.stock >= product.quantity) {
@@ -83,7 +85,10 @@ class CartHandler {
             purchaser: getPurchaser()
         })
 
-        response.render('layouts/ticket', ticket)
+        response.render('layouts/ticket', {
+            ...ticket._doc,
+            products: sale
+        })
     }
 }
 

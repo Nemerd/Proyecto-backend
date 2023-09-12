@@ -1,6 +1,11 @@
 const lista = document.getElementById("lista-de-productos")
 const logout = document.getElementById('logout')
 
+const cartID = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("cart="))
+    ?.split("=")[1];
+
 logout.addEventListener('click', async (evt) => {
     console.log(await fetch(
         'http://localhost:8080/api/cookies/deleteCookies',
@@ -36,6 +41,14 @@ async function reloadProducts(sitename) {
             }
             newTd.appendChild(tdElement)
         }
+
+        const addCell = newTr.insertCell()
+        const addButton = document.createElement('button')
+        addButton.textContent = 'Agregar al carrito'
+        addButton.addEventListener('click', async () => {
+            await fetch(`http://localhost:8080/api/carts/${cartID}/product/${product._id}`, { method: 'POST' })
+        })
+        addCell.appendChild(addButton)
 
     })
 }
