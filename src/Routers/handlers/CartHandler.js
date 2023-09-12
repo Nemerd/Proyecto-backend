@@ -62,7 +62,6 @@ class CartHandler {
 
         // Check stock and add it to sale
         for (const product of workingCart.products) {
-            console.log(product);
             if (product.product.stock < product.quantity) {
                 unableToBuy.push(product)
             } else if (product.product.stock >= product.quantity) {
